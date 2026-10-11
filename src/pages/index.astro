@@ -1,50 +1,200 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+// Chenelle's little corner of the internet 💗
 ---
-
-<!doctype html>
 <html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-	</head>
-	<body>
-		<Header />
-		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This
-				template serves as a lightweight, minimally-styled starting point for anyone looking to build
-				a personal website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to <a href="https://docs.astro.build/"
-					>read the docs
-				</a> or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out <a
-					href="https://github.com/Charca/astro-blog-template"
-					>astro-blog-template
-				</a> by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
-		</main>
-		<Footer />
-	</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#ffe4ed" />
+    <title>For Chenelle ♡</title>
+    <style>
+      :root { font-family: 'Trebuchet MS', system-ui, sans-serif; color:#673f57; background:#fff6fa; }
+      * { box-sizing:border-box; }
+      html { scroll-behavior:smooth; }
+      body { margin:0; overflow-x:hidden; background:radial-gradient(circle at top left,#ffe1f0,transparent 45%),radial-gradient(circle at bottom right,#e8dcff,transparent 40%),#fff8fb; }
+      main { max-width:980px; margin:auto; padding:24px 18px 100px; position:relative; z-index:1; }
+      header { text-align:center; padding:75px 10px 45px; }
+      .eyebrow { text-transform:uppercase; letter-spacing:3px; font-size:.8rem; font-weight:bold; color:#b56791; }
+      h1 { font-size:clamp(3rem,9vw,6rem); margin:12px 0; color:#d35b94; text-shadow:3px 4px 0 #fff; }
+      h2 { color:#c3558b; font-size:clamp(1.6rem,4vw,2.3rem); margin-top:0; }
+      p { line-height:1.75; }
+      .subtitle { font-size:1.15rem; }
+      .pill,.button { display:inline-block; border:0; border-radius:999px; padding:13px 22px; background:#ef8bb7; color:#fff; font:inherit; font-weight:bold; cursor:pointer; text-decoration:none; box-shadow:0 5px 0 #d76d9c; transition:transform .2s; }
+      .pill:hover,.button:hover { transform:translateY(-3px); }
+      nav { display:flex; justify-content:center; gap:10px; flex-wrap:wrap; margin:22px auto 0; }
+      nav a { background:white; color:#b64c83; padding:9px 15px; border-radius:999px; text-decoration:none; border:2px solid #ffd2e5; font-size:.9rem; }
+      section { background:rgba(255,255,255,.86); border:3px solid #ffd3e6; border-radius:30px; padding:clamp(22px,5vw,42px); margin:28px 0; box-shadow:9px 9px 0 #fce0ed; }
+      .center { text-align:center; }
+      .counter { font-size:clamp(3rem,10vw,5.5rem); color:#d35b94; font-weight:900; line-height:1; margin:14px 0; }
+      .small { font-size:.88rem; color:#966a82; }
+      .letter { background:#fff7e9; border:2px dashed #efb7cb; padding:25px; border-radius:18px; transform:rotate(-.5deg); }
+      .letter p { white-space:pre-line; }
+      .gallery { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:16px; }
+      .photo { background:#fff; padding:12px 12px 20px; box-shadow:0 5px 15px #eac4d580; transform:rotate(-2deg); text-align:center; }
+      .photo:nth-child(even) { transform:rotate(2deg); }
+      .photo img { width:100%; height:200px; object-fit:cover; border-radius:4px; display:block; background:#f8dbe9; }
+      .placeholder { display:grid; place-items:center; height:200px; background:linear-gradient(135deg,#ffdce9,#e4d8ff); font-size:3.5rem; }
+      .photo span { display:block; margin-top:12px; font-weight:bold; }
+      .game-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:18px; }
+      .game { background:#fff1f7; padding:20px; border-radius:22px; border:2px solid #ffd1e5; text-align:center; }
+      .game h3 { margin:0 0 8px; }
+      .score { font-size:1.2rem; font-weight:bold; }
+      #heart-field { height:190px; position:relative; border:2px dashed #f1a7ca; border-radius:16px; overflow:hidden; background:#fff9fc; margin:12px 0; }
+      #catch-heart { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); background:none; border:none; font-size:3rem; cursor:pointer; padding:8px; }
+      .choice { background:white; border:2px solid #f3aacd; border-radius:14px; padding:10px; cursor:pointer; font-size:1.5rem; }
+      .choices { display:flex; gap:12px; justify-content:center; margin:15px 0; }
+      .secret { font-size:1.1rem; font-weight:bold; color:#bc4f86; min-height:45px; }
+      .float-heart { position:fixed; bottom:-40px; pointer-events:none; opacity:.6; z-index:0; animation:rise linear forwards; }
+      @keyframes rise { to { transform:translateY(-115vh) rotate(35deg); opacity:0; } }
+      footer { text-align:center; padding:30px; color:#a2698a; }
+      @media(prefers-reduced-motion:reduce) { *,*::before,*::after { animation:none!important; scroll-behavior:auto!important; } }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <div class="eyebrow">a little corner of the internet</div>
+        <h1>For Chenelle ♡</h1>
+        <p class="subtitle">A tiny world full of love, made just for you. 🎀</p>
+        <a class="pill" href="#letter">Open your surprise 💌</a>
+        <nav aria-label="Website sections">
+          <a href="#us">Our story</a><a href="#letter">Love letter</a><a href="#memories">Memories</a><a href="#games">Games</a><a href="#secrets">Secrets</a>
+        </nav>
+      </header>
+
+      <section id="us" class="center">
+        <h2>Every day with you is my favorite ♡</h2>
+        <p>We've been together for...</p>
+        <div class="counter" id="days">♡</div>
+        <p>beautiful days (and counting!)</p>
+        <p class="small">Since November 3, 2024 — change the year in the code if needed.</p>
+      </section>
+
+      <section id="letter">
+        <h2>A little love letter 💌</h2>
+        <div class="letter">
+          <p>My dearest Chenelle,</p>
+          <p>I made this little place on the internet just for you. Somewhere you can visit whenever you need a smile, a reminder that you're loved, or a little bit of magic.</p>
+          <p>Thank you for all the laughs, the memories, and the little moments that mean everything to me. I can't wait for all the adventures we still have ahead of us.</p>
+          <p>You're my favorite person, and this is only the beginning. ♡</p>
+          <p>Forever yours,<br />Your love 💗</p>
+        </div>
+      </section>
+
+      <section id="memories">
+        <h2>Our scrapbook 📸</h2>
+        <p>We'll fill this with our favorite memories together.</p>
+        <div class="gallery">
+          <div class="photo"><div class="placeholder">🌷</div><span>Our favorite day</span></div>
+          <div class="photo"><div class="placeholder">🧸</div><span>Our cutest photo</span></div>
+          <div class="photo"><div class="placeholder">🎀</div><span>A moment to remember</span></div>
+        </div>
+        <p class="small">Photo placeholders for now. We'll add your real photos next!</p>
+      </section>
+
+      <section id="games">
+        <h2>Little love games 🎮</h2>
+        <div class="game-grid">
+          <div class="game">
+            <h3>Catch the heart 💗</h3>
+            <p>Tap the heart as many times as you can!</p>
+            <div class="score">Hearts caught: <span id="score">0</span></div>
+            <div id="heart-field"><button id="catch-heart" aria-label="Catch heart">💗</button></div>
+            <button class="button" id="reset-score">Start over</button>
+          </div>
+          <div class="game">
+            <h3>Find the love 💝</h3>
+            <p>One of these boxes hides a little surprise!</p>
+            <div class="choices">
+              <button class="choice" data-box="0" aria-label="Open box 1">🎁</button>
+              <button class="choice" data-box="1" aria-label="Open box 2">🎁</button>
+              <button class="choice" data-box="2" aria-label="Open box 3">🎁</button>
+            </div>
+            <p id="guess-result" aria-live="polite">Choose a box!</p>
+            <button class="button" id="shuffle">Play again</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="secrets" class="center">
+        <h2>Secret love notes 🔐</h2>
+        <p>Press the button whenever you need a little reminder.</p>
+        <button class="button" id="reveal">Reveal a secret 💕</button>
+        <p class="secret" id="secret-text" aria-live="polite"></p>
+        <p class="small">Psst... try tapping the big title at the top five times.</p>
+      </section>
+      <footer>Made with all my love, just for Chenelle ♡</footer>
+    </main>
+    <script>
+      // IMPORTANT: Edit this date to the real year you got together.
+      const anniversary = new Date(2024, 10, 3); // November is month 10 in JavaScript.
+      const daysEl = document.querySelector<HTMLElement>('#days');
+      function updateDays() {
+        const now = new Date();
+        const todayUTC = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
+        const startUTC = Date.UTC(anniversary.getFullYear(), anniversary.getMonth(), anniversary.getDate());
+        if (daysEl) daysEl.textContent = String(Math.max(0, Math.floor((todayUTC - startUTC) / 86400000)));
+      }
+      updateDays();
+      const field = document.querySelector<HTMLElement>('#heart-field');
+      const heart = document.querySelector<HTMLButtonElement>('#catch-heart');
+      const scoreEl = document.querySelector<HTMLElement>('#score');
+      let score = 0;
+      function moveHeart() {
+        if (!field || !heart) return;
+        const x = 36 + Math.random() * Math.max(0, field.clientWidth - 72);
+        const y = 36 + Math.random() * Math.max(0, field.clientHeight - 72);
+        heart.style.left = `${x}px`; heart.style.top = `${y}px`;
+      }
+      heart?.addEventListener('click', () => { score++; if(scoreEl) scoreEl.textContent=String(score); moveHeart(); });
+      document.querySelector('#reset-score')?.addEventListener('click', () => { score=0; if(scoreEl) scoreEl.textContent='0'; moveHeart(); });
+      let winningBox = Math.floor(Math.random()*3);
+      document.querySelectorAll<HTMLButtonElement>('[data-box]').forEach(button => {
+        button.addEventListener('click', () => {
+          const result = document.querySelector<HTMLElement>('#guess-result');
+          if(result) result.textContent = Number(button.dataset.box) === winningBox ? 'You found it! My heart belongs to you! 💖' : 'Not this one! Try another 🎀';
+        });
+      });
+      document.querySelector('#shuffle')?.addEventListener('click', () => {
+        winningBox=Math.floor(Math.random()*3);
+        const result=document.querySelector<HTMLElement>('#guess-result');
+        if(result) result.textContent='Choose a box!';
+      });
+      const notes = [
+        'You make ordinary days feel magical. ✨',
+        'I would choose you in every universe. 🌙',
+        'Your smile is my favorite thing. 💗',
+        'You are loved more than words can say. 💌',
+        'My favorite place is wherever you are. 🧸',
+        'The best part of my day is you. 🌷'
+      ];
+      let lastNote = -1;
+      document.querySelector('#reveal')?.addEventListener('click', () => {
+        let next = Math.floor(Math.random()*notes.length);
+        if(notes.length > 1 && next===lastNote) next=(next+1)%notes.length;
+        lastNote=next;
+        const output=document.querySelector<HTMLElement>('#secret-text');
+        if(output) output.textContent=notes[next];
+      });
+      let titleClicks = 0;
+      document.querySelector('h1')?.addEventListener('click', () => {
+        titleClicks++;
+        if(titleClicks===5) { alert('Secret unlocked: You are my forever favorite person! 💘'); titleClicks=0; }
+      });
+      if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        const emojis = ['💗','💕','🌸','♡'];
+        window.setInterval(() => {
+          if(document.hidden || document.querySelectorAll('.float-heart').length > 18) return;
+          const el=document.createElement('span');
+          el.className='float-heart';
+          el.textContent=emojis[Math.floor(Math.random()*emojis.length)];
+          el.style.left=`${Math.random()*100}%`;
+          el.style.fontSize=`${15+Math.random()*20}px`;
+          el.style.animationDuration=`${6+Math.random()*5}s`;
+          document.body.appendChild(el);
+          el.addEventListener('animationend',()=>el.remove(),{once:true});
+        },900);
+      }
+    </script>
+  </body>
 </html>
