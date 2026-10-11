@@ -48,6 +48,140 @@
       @keyframes rise { to { transform:translateY(-115vh) rotate(35deg); opacity:0; } }
       footer { text-align:center; padding:30px; color:#a2698a; }
       @media(prefers-reduced-motion:reduce) { *,*::before,*::after { animation:none!important; scroll-behavior:auto!important; } }
+
+/* Cute scrapbook photo gallery */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  margin: 35px auto;
+  max-width: 950px;
+  align-items: center;
+}
+
+.gallery img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  background: white;
+  padding: 12px 12px 42px;
+  border-radius: 3px;
+  box-shadow: 0 8px 22px rgba(120, 50, 80, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.gallery img:nth-child(1) {
+  transform: rotate(-5deg);
+}
+
+.gallery img:nth-child(2) {
+  transform: rotate(3deg);
+}
+
+.gallery img:nth-child(3) {
+  transform: rotate(-3deg);
+}
+
+.gallery img:hover {
+  transform: rotate(0deg) scale(1.06);
+  box-shadow: 0 15px 30px rgba(120, 50, 80, 0.3);
+  z-index: 2;
+}
+
+@media (max-width: 650px) {
+  .gallery {
+    grid-template-columns: 1fr;
+    max-width: 300px;
+    gap: 25px;
+  }
+}
+
+/* Make scrapbook photos clickable */
+.gallery img {
+  cursor: pointer;
+}
+
+.gallery img:focus-visible {
+  outline: 3px solid #ff69a6;
+  outline-offset: 6px;
+}
+
+/* Pink photo popup */
+.photo-modal {
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  width: min(90vw, 520px);
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 28px 24px;
+  border: 3px solid #ffc0da;
+  border-radius: 24px;
+  background: #fff5fa;
+  box-shadow: 0 20px 70px rgba(105, 30, 70, 0.3);
+  text-align: center;
+  color: #85345d;
+}
+
+.photo-modal::backdrop {
+  background: rgba(65, 20, 45, 0.75);
+  backdrop-filter: blur(7px);
+}
+
+.photo-modal[open] {
+  animation: photoPop 0.3s ease-out;
+}
+
+.photo-modal img {
+  display: block;
+  width: 100%;
+  max-height: 60vh;
+  object-fit: contain;
+  border: 10px solid white;
+  border-bottom-width: 25px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  box-sizing: border-box;
+}
+
+#modalMessage {
+  margin: 22px 0 12px;
+  font-size: 1.1rem;
+  line-height: 1.7;
+}
+
+.photo-close {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  border: none;
+  background: transparent;
+  color: #a83f72;
+  font-size: 32px;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.modal-heart {
+  font-size: 32px;
+  color: #ff6ca8;
+}
+
+@keyframes photoPop {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .photo-modal[open] {
+    animation: none;
+  }
+}
     </style>
   </head>
   <body>
@@ -81,16 +215,60 @@
         </div>
       </section>
 
-      <section id="memories">
-        <h2>Our scrapbook 📸</h2>
-        <p>We'll fill this with our favorite memories together.</p>
-        <div class="gallery">
-            <img src="/memory1.jpg" alt="I don't like surprises, but I loved this one" />
-            <img src="/memory2.jpg" alt="My favorite day with you" />
-            <img src="/memory3.jpg" alt="Your cutest eyes with my dog :(" />
-        </div>
-        <p class="small">Some of my current favorite memories together <3</p>
-      </section>
+
+<section id="memories">
+  <h2>Our scrapbook 📸</h2>
+  <p>Some of my favorite moments with you.</p>
+
+  <div class="gallery">
+    <img
+      src="/memory1.jpg"
+      alt="I don't like surprises, but I loved this one"
+      data-message="I don't usually like surprises, but this one was different. You made it so special. ❤️"
+      tabindex="0"
+      role="button"
+      aria-label="Open our first memory"
+    />
+
+    <img
+      src="/memory2.jpg"
+      alt="My favorite day with you"
+      data-message="I struggled a little this day, but you helped me get through it and the amount of fun we ended up having is something i'll never forget ❤️"
+      tabindex="0"
+      role="button"
+      aria-label="Open our second memory"
+    />
+
+    <img
+      src="/memory3.jpg"
+      alt="Your cutest eyes with my dog :("
+      data-message="Two of my favorite beings in one picture. I love this one so much. 🥹💕"
+      tabindex="0"
+      role="button"
+      aria-label="Open our third memory"
+    />
+  </div>
+
+  <p class="small">
+    Some of my current favorite memories together ♡
+  </p>
+</section>
+
+<!-- Photo popup -->
+<dialog id="photoModal" class="photo-modal">
+  <button
+    id="closePhoto"
+    class="photo-close"
+    type="button"
+    aria-label="Close photo"
+  >×</button>
+
+  <img id="modalImage" src="" alt="" />
+
+  <p id="modalMessage"></p>
+  <div class="modal-heart">♡</div>
+</dialog>
+
 
       <section id="games">
         <h2>Little love games 🎮</h2>
@@ -126,6 +304,60 @@
       <footer>Made with all my love, just for Chenelle ♡</footer>
     </main>
     <script>
+  const photoModal = document.querySelector(
+    "#photoModal"
+  ) as HTMLDialogElement;
+
+  const modalImage = document.querySelector(
+    "#modalImage"
+  ) as HTMLImageElement;
+
+  const modalMessage = document.querySelector(
+    "#modalMessage"
+  ) as HTMLElement;
+
+  const closePhoto = document.querySelector(
+    "#closePhoto"
+  ) as HTMLButtonElement;
+
+  const photos = document.querySelectorAll(
+    ".gallery img"
+  );
+
+  function openPhoto(photo: HTMLImageElement) {
+    modalImage.src = photo.src;
+    modalImage.alt = photo.alt;
+
+    modalMessage.textContent =
+      photo.dataset.message || "";
+
+    photoModal.showModal();
+  }
+
+  photos.forEach((photo) => {
+    const image = photo as HTMLImageElement;
+
+    image.addEventListener("click", () => {
+      openPhoto(image);
+    });
+
+    image.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        openPhoto(image);
+      }
+    });
+  });
+
+  closePhoto.addEventListener("click", () => {
+    photoModal.close();
+  });
+
+  photoModal.addEventListener("click", (event) => {
+    if (event.target === photoModal) {
+      photoModal.close();
+    }
+  });
       // IMPORTANT: Edit this date to the real year you got together.
       const anniversary = new Date(2025, 10, 3); // November is month 10 in JavaScript.
       const daysEl = document.querySelector<HTMLElement>('#days');
